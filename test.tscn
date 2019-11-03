@@ -1,0 +1,133 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://CameraRig.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+var mouseHidden : bool = true
+
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _input(event):
+	if event.is_action_pressed(\"ui_cancel\"):
+		if mouseHidden == true:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			mouseHidden = false
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			mouseHidden = true"
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 20, 20 )
+
+[sub_resource type="ConvexPolygonShape" id=3]
+points = PoolVector3Array( 10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, -10 )
+
+[sub_resource type="CubeMesh" id=4]
+
+[sub_resource type="ConvexPolygonShape" id=5]
+points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
+
+[sub_resource type="ConvexPolygonShape" id=6]
+points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
+
+[sub_resource type="ConvexPolygonShape" id=7]
+points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
+
+[sub_resource type="ConvexPolygonShape" id=8]
+points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 1, 0, 0, 1 )
+metallic = 0.44
+roughness = 0.3
+
+[sub_resource type="CapsuleMesh" id=10]
+material = SubResource( 9 )
+radius = 0.5
+radial_segments = 16
+
+[node name="root" type="Node"]
+script = SubResource( 1 )
+
+[node name="testLevel" type="Spatial" parent="."]
+editor/display_folded = true
+
+[node name="MeshInstance" type="MeshInstance" parent="testLevel"]
+editor/display_folded = true
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="testLevel/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="testLevel/MeshInstance/StaticBody"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="testLevel"]
+editor/display_folded = true
+transform = Transform( 1.35899, 1.61091, 0.0902551, -1.36355, 1.2098, -1.06168, -0.862505, 0.625619, 1.82064, 1.46825, 1.55719, -6.04724 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="testLevel/MeshInstance2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="testLevel/MeshInstance2/StaticBody"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="testLevel"]
+editor/display_folded = true
+transform = Transform( 0.0244046, 0.267114, 0.963356, 0.126969, 0.955011, -0.268016, -1.33623, 0.173641, -0.0142955, 5.10123, 0.363782, 6.04695 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="testLevel/MeshInstance3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="testLevel/MeshInstance3/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="testLevel"]
+editor/display_folded = true
+transform = Transform( 1.87222, 0.814666, 1.21066, -0.254868, 2.12164, -1.03355, -1.4368, 0.685197, 1.76086, -5.92745, 0.363782, 5.26343 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="testLevel/MeshInstance5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="testLevel/MeshInstance5/StaticBody"]
+shape = SubResource( 7 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="testLevel"]
+editor/display_folded = true
+transform = Transform( 0.0244046, 0.267114, 0.963356, 0.126969, 0.955011, -0.268016, -0.991606, 0.128858, -0.0106086, -7.13575, 3.38322, -1.79563 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="testLevel/MeshInstance4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="testLevel/MeshInstance4/StaticBody"]
+shape = SubResource( 8 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="testLevel"]
+transform = Transform( -0.998992, -0.0430098, 0.012838, 0, 0.286021, 0.958223, -0.044885, 0.957258, -0.285732, 0, 5, 0 )
+shadow_enabled = true
+
+[node name="dummyPlayer" type="Spatial" parent="."]
+editor/display_folded = true
+
+[node name="MeshInstance" type="MeshInstance" parent="dummyPlayer"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 1, 0 )
+mesh = SubResource( 10 )
+material/0 = null
+
+[node name="CameraRig" parent="." instance=ExtResource( 1 )]
+target = NodePath("../dummyPlayer")
+
+[node name="hint" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 361.0
+margin_bottom = 126.0
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+text = "Press Escape to unlock mouse from game window"
