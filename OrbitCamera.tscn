@@ -15,6 +15,7 @@ export var horizontalSensitivity : float = 0.002
 export var camLerpSpeed : float = 16
 export var camYOffset : float = 4
 export var camZOffset : float = 1.5
+export var camGroundOffset : float = 1.0
 export(NodePath) var target
 
 # Private variables
@@ -49,8 +50,8 @@ func _input(event) -> void:
 
 func _physics_process(delta) -> void:
 	# Find the closest point that is blocking the camera
-	var rayOrigin = camTarget.global_transform.origin + Vector3(0,camYOffset,0)
-	var rayTarget = to_global(cam.transform.origin + Vector3(0,0,camZOffset))
+	var rayOrigin = camTarget.global_transform.origin + Vector3(0,camYOffset-camGroundOffset,0)
+	var rayTarget = to_global(cam.transform.origin + Vector3(0,-camGroundOffset,camZOffset))
 	var obstacle = get_world().direct_space_state.intersect_ray(rayOrigin, rayTarget,[camTarget])
 	# If a collison shape is blocking the camera, reposition the camera
 	if not obstacle.empty():
