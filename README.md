@@ -1,4 +1,5 @@
 # Godot-orbit-camera
- 3rd person orbit camera with obstacle avoidance
- For ease of use a ready to use node is provided. Just drag OrbitCamera.tscn into your game scene and adjust the settings. All of the functionality is embedded into the node.
+ Orbit camera rig with obstacle avoidance using a raycast
  
+## Usage
+For ease of use a ready to use node is provided (OrbitCamera.tscn). Just drag the rig into your game scene and adjust the settings. All of the functionality is embedded into the node.
