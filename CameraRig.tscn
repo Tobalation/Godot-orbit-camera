@@ -5,10 +5,11 @@
 [node name="CameraRig" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="Camera" type="Camera" parent="."]
+[node name="ClippedCamera" type="ClippedCamera" parent="."]
 keep_aspect = 0
 current = true
 fov = 90.0
 size = 7.31429
 near = 0.1
 far = 2000.0
+margin = 1.0

@@ -17,7 +17,8 @@ func _input(event):
 			mouseHidden = false
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			mouseHidden = true"
+			mouseHidden = true
+"
 
 [sub_resource type="PlaneMesh" id=2]
 size = Vector2( 20, 20 )
@@ -53,10 +54,8 @@ radial_segments = 16
 script = SubResource( 1 )
 
 [node name="testLevel" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="MeshInstance" type="MeshInstance" parent="testLevel"]
-editor/display_folded = true
 mesh = SubResource( 2 )
 material/0 = null
 
@@ -66,7 +65,6 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="testLevel"]
-editor/display_folded = true
 transform = Transform( 1.35899, 1.61091, 0.0902551, -1.36355, 1.2098, -1.06168, -0.862505, 0.625619, 1.82064, 1.46825, 1.55719, -6.04724 )
 mesh = SubResource( 4 )
 material/0 = null
@@ -77,7 +75,6 @@ material/0 = null
 shape = SubResource( 5 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="testLevel"]
-editor/display_folded = true
 transform = Transform( 0.0244046, 0.267114, 0.963356, 0.126969, 0.955011, -0.268016, -1.33623, 0.173641, -0.0142955, 5.10123, 0.363782, 6.04695 )
 mesh = SubResource( 4 )
 material/0 = null
@@ -88,7 +85,6 @@ material/0 = null
 shape = SubResource( 6 )
 
 [node name="MeshInstance5" type="MeshInstance" parent="testLevel"]
-editor/display_folded = true
 transform = Transform( 1.87222, 0.814666, 1.21066, -0.254868, 2.12164, -1.03355, -1.4368, 0.685197, 1.76086, -5.92745, 0.363782, 5.26343 )
 mesh = SubResource( 4 )
 material/0 = null
@@ -99,7 +95,6 @@ material/0 = null
 shape = SubResource( 7 )
 
 [node name="MeshInstance4" type="MeshInstance" parent="testLevel"]
-editor/display_folded = true
 transform = Transform( 0.0244046, 0.267114, 0.963356, 0.126969, 0.955011, -0.268016, -0.991606, 0.128858, -0.0106086, -7.13575, 3.38322, -1.79563 )
 mesh = SubResource( 4 )
 material/0 = null
@@ -114,10 +109,9 @@ transform = Transform( -0.998992, -0.0430098, 0.012838, 0, 0.286021, 0.958223, -
 shadow_enabled = true
 
 [node name="dummyPlayer" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="MeshInstance" type="MeshInstance" parent="dummyPlayer"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 1, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
 mesh = SubResource( 10 )
 material/0 = null
 
@@ -131,3 +125,6 @@ margin_right = 361.0
 margin_bottom = 126.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "Press Escape to unlock mouse from game window"
+__meta__ = {
+"_edit_use_anchors_": false
+}

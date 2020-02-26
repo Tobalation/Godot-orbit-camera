@@ -1,5 +1,6 @@
 # Godot-orbit-camera
- Orbit camera rig with obstacle avoidance using a raycast
+ Orbit camera rig for a orbiting 3rd person view.
  
 ## Usage
-For ease of use a ready to use node is provided (OrbitCamera.tscn). Just drag the rig into your game scene and adjust the settings. All of the functionality is embedded into the node.
+Add the CameraRig scene to the scene that the object you want to orbit is in, then set the target of the camera rig.
+The camera rig will automatically follow the target.
