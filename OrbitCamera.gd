@@ -15,13 +15,13 @@ export(NodePath) var target
 
 # Private variables
 var _camTarget : Spatial = null
-var _cam : Camera
+var _cam : ClippedCamera
 var _curZoom : float = 0.0
 
 func _ready() -> void:
 	# Setup node references
 	_camTarget = get_node(target)
-	_cam = get_node("Camera")
+	_cam = get_node("ClippedCamera")
 	
 	# Setup camera position in rig
 	_cam.translate(Vector3(0,camYOffset,maxZoom))

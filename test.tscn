@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://CameraRig.tscn" type="PackedScene" id=1]
 
@@ -40,15 +40,82 @@ points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1,
 [sub_resource type="ConvexPolygonShape" id=8]
 points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="GDScript" id=11]
+script/source = "# This script is a modified version of the cubio.gd script (character driver script)
+# from the official \"Kinematic Character 3D demo\"
+
+extends KinematicBody
+
+const MAX_SPEED = 5
+const JUMP_SPEED = 7
+const ACCELERATION = 2
+const DECELERATION = 4
+const MAX_SLOPE_ANGLE = 30
+
+onready var gravity = -ProjectSettings.get_setting(\"physics/3d/default_gravity\")
+var velocity: Vector3
+var resetPosition: Vector3
+
+func _ready():
+	# Set the reset position
+	resetPosition = global_transform.origin
+
+func _physics_process(delta):
+	if Input.is_action_just_pressed(\"reset_position\"):
+		translation = resetPosition
+	
+	# Get input
+	var dir = Vector3()
+	dir.x = Input.get_action_strength(\"move_right\") - Input.get_action_strength(\"move_left\")
+	dir.z = Input.get_action_strength(\"move_back\") - Input.get_action_strength(\"move_forward\")
+	
+	# Get the camera's transform basis, but remove the X rotation such
+	# that the Y axis is up and Z is horizontal.
+	var cam_basis = get_node(\"/root/root/CameraRig\").global_transform.basis
+	var basis = cam_basis.rotated(cam_basis.x, -cam_basis.get_euler().x)
+	dir = basis.xform(dir)
+	
+	# Limit the input to a length of 1. length_squared is faster to check.
+	if dir.length_squared() > 1:
+		dir /= dir.length()
+
+	# Apply gravity.
+	velocity.y += delta * gravity
+
+	# Using only the horizontal velocity, interpolate towards the input.
+	var hvel = velocity
+	hvel.y = 0
+
+	var target = dir * MAX_SPEED
+	var acceleration
+	if dir.dot(hvel) > 0:
+		acceleration = ACCELERATION
+	else:
+		acceleration = DECELERATION
+
+	hvel = hvel.linear_interpolate(target, acceleration * delta)
+
+	# Assign hvel's values back to velocity, and then move.
+	velocity.x = hvel.x
+	velocity.z = hvel.z
+	velocity = move_and_slide(velocity, Vector3.UP)
+
+	# Jumping code. is_on_floor() must come after move_and_slide().
+	if is_on_floor() and Input.is_action_pressed(\"jump\"):
+		velocity.y = JUMP_SPEED
+"
+
+[sub_resource type="CapsuleMesh" id=10]
+radius = 0.5
+radial_segments = 16
+
+[sub_resource type="SpatialMaterial" id=14]
 albedo_color = Color( 1, 0, 0, 1 )
 metallic = 0.44
 roughness = 0.3
 
-[sub_resource type="CapsuleMesh" id=10]
-material = SubResource( 9 )
+[sub_resource type="CapsuleShape" id=13]
 radius = 0.5
-radial_segments = 16
 
 [node name="root" type="Node"]
 script = SubResource( 1 )
@@ -108,12 +175,17 @@ shape = SubResource( 8 )
 transform = Transform( -0.998992, -0.0430098, 0.012838, 0, 0.286021, 0.958223, -0.044885, 0.957258, -0.285732, 0, 5, 0 )
 shadow_enabled = true
 
-[node name="dummyPlayer" type="Spatial" parent="."]
+[node name="dummyPlayer" type="KinematicBody" parent="."]
+script = SubResource( 11 )
 
-[node name="MeshInstance" type="MeshInstance" parent="dummyPlayer"]
+[node name="Capsule" type="MeshInstance" parent="dummyPlayer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
 mesh = SubResource( 10 )
-material/0 = null
+material/0 = SubResource( 14 )
+
+[node name="CollisionShape" type="CollisionShape" parent="dummyPlayer"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0 )
+shape = SubResource( 13 )
 
 [node name="CameraRig" parent="." instance=ExtResource( 1 )]
 target = NodePath("../dummyPlayer")
@@ -124,7 +196,11 @@ margin_top = 20.0
 margin_right = 361.0
 margin_bottom = 126.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
-text = "Press Escape to unlock mouse from game window"
+text = "Use WASD to move and Space to jump.
+
+Press Escape to unlock mouse from game window.
+
+Press R to reset character position."
 __meta__ = {
 "_edit_use_anchors_": false
 }
