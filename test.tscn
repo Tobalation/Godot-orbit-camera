@@ -40,7 +40,7 @@ points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1,
 [sub_resource type="ConvexPolygonShape" id=8]
 points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=9]
 script/source = "# This script is a modified version of the cubio.gd script (character driver script)
 # from the official \"Kinematic Character 3D demo\"
 
@@ -109,12 +109,12 @@ func _physics_process(delta):
 radius = 0.5
 radial_segments = 16
 
-[sub_resource type="SpatialMaterial" id=14]
+[sub_resource type="SpatialMaterial" id=11]
 albedo_color = Color( 1, 0, 0, 1 )
 metallic = 0.44
 roughness = 0.3
 
-[sub_resource type="CapsuleShape" id=13]
+[sub_resource type="CapsuleShape" id=12]
 radius = 0.5
 
 [node name="root" type="Node"]
@@ -176,16 +176,16 @@ transform = Transform( -0.998992, -0.0430098, 0.012838, 0, 0.286021, 0.958223, -
 shadow_enabled = true
 
 [node name="dummyPlayer" type="KinematicBody" parent="."]
-script = SubResource( 11 )
+script = SubResource( 9 )
 
 [node name="Capsule" type="MeshInstance" parent="dummyPlayer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
 mesh = SubResource( 10 )
-material/0 = SubResource( 14 )
+material/0 = SubResource( 11 )
 
 [node name="CollisionShape" type="CollisionShape" parent="dummyPlayer"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0 )
-shape = SubResource( 13 )
+shape = SubResource( 12 )
 
 [node name="CameraRig" parent="." instance=ExtResource( 1 )]
 target = NodePath("../dummyPlayer")
